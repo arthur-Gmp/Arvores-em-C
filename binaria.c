@@ -11,12 +11,16 @@ Node *insert(Node *root, int item){
 
     if (root == NULL){
         Node *new = malloc(sizeof(Node));
+        if (new == NULL) {
+            printf("Erro: Falha na alocacao de memoria.\n");
+            return NULL;
+        }
         new->item = item;
         new->left = NULL;
         new->right = NULL;
         return new;
     }
-    else{
+    else if (root != NULL){
         if (item > root->item){
 
             root->right = insert(root->right, item);
@@ -25,6 +29,10 @@ Node *insert(Node *root, int item){
 
             root->left = insert(root->left, item);
         }
+    else {
+        printf("Item ja existe na arvore.\n");
+        return NULL;
+    }
     }
     return root;
 }
@@ -132,9 +140,17 @@ int main(){
             printf("digite o numero q o senhor deseja inserir: ");
             scanf("%d", &item);
             root = insert(root, item);
+            if (root == NULL){
+                break;
+            }
             printf("item Inserido!\n");
             break;
+
         case 2:
+            if (root == NULL){
+                printf("A Arvore ainda está vazia.\n");
+                break;
+            }
             printf("Digite o item que deseja buscar: ");
             scanf("%d", &item);
             {
@@ -147,6 +163,10 @@ int main(){
             break;                                         
 
         case 3:
+            if (root == NULL){
+                printf("A Arvore ainda está vazia.\n");
+                break;
+            }
             printf("Digite o item que deseja remover: ");
             scanf("%d", &item);
             root = removeNode(root, item);
